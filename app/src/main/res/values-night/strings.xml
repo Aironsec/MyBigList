@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyBigList</string>
+    <string name="id_awarding">ID:</string>
+    <string name="coin_price_awarding">Coin price:</string>
+    <string name="image_description">image</string>
+</resources>

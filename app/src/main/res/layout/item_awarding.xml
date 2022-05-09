@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="116dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/icon_awarding"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="@dimen/margin_8dp"
+        android:contentDescription="@string/image_description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="@string/id_awarding"
+                android:textSize="@dimen/text_size_20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/id_awarding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:lines="2"
+                android:textSize="@dimen/text_size_20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="@string/coin_price_awarding"
+                android:textSize="@dimen/text_size_20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/coin_price_awarding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:textSize="@dimen/text_size_20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
