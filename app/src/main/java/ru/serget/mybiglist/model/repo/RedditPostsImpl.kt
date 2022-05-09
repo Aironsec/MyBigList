@@ -7,9 +7,11 @@ import ru.serget.mybiglist.model.entity.AllAwarding
 import ru.serget.mybiglist.model.entity.Root
 
 class RedditPostsImpl(private val api: IDataSource) : IRedditPosts {
-    private val page = 20L
+    private var startElement = 0
+    private var endElement = 0
+    private var countElementPage = 20
 
-    override fun getAllAwarding(): Single<List<AllAwarding>> {
+    override fun getBigList(): Single<List<AllAwarding>> {
         return api.getAllAwarding()
             .subscribeOn(Schedulers.io())
             .map { converterToListAwarding(it) }
@@ -22,6 +24,15 @@ class RedditPostsImpl(private val api: IDataSource) : IRedditPosts {
                 allAwarding.add(awarding)
             }
         }
-        return allAwarding
+        return someDataPerPage(allAwarding)
+    }
+
+    private fun someDataPerPage(allData: List<AllAwarding>): List<AllAwarding> {
+        startElement = endElement
+        endElement += countElementPage
+        if (endElement > allData.size)
+            endElement = allData.size
+
+        return allData.subList(startElement, endElement)
     }
 }

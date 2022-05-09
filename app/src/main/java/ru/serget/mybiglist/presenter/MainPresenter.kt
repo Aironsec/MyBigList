@@ -1,7 +1,7 @@
 package ru.serget.mybiglist.presenter
 
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import ru.serget.mybiglist.model.entity.AllAwarding
 import ru.serget.mybiglist.model.repo.IRedditPosts
 import ru.serget.mybiglist.presenter.list.IPresenterList
@@ -11,7 +11,6 @@ import ru.serget.mybiglist.view.list.IAwardingView
 class MainPresenter<V : IMainActivity>(
     private val repo: IRedditPosts,
     private val uiScheduler: Scheduler,
-    private var dsRX: CompositeDisposable = CompositeDisposable(),
 ) : IMainPresenter<V> {
 
     inner class AwardingListPresenter : IPresenterList<IAwardingView> {
@@ -32,27 +31,22 @@ class MainPresenter<V : IMainActivity>(
     }
 
     private var currentView: V? = null
-    private var currentItemPage = 0
-    private var lastItemPage = 0
-    private val countItemPage = 20
     val awardingList = AwardingListPresenter()
+    private var dsRX: Disposable? = null
 
     private fun loadData() {
-        dsRX.add(repo.getAllAwarding()
+        dsRX = repo.getBigList()
             .observeOn(uiScheduler)
             .subscribe { allAwarding ->
                 loadPageData(allAwarding)
             }
-        )
     }
 
     private fun loadPageData(listData: List<AllAwarding>) {
-        currentItemPage = lastItemPage
-        lastItemPage += countItemPage
-        if (listData.size < lastItemPage) lastItemPage = listData.size
-            awardingList.allAwarding.addAll(listData.subList(currentItemPage, lastItemPage))
+        if (listData.isNotEmpty()) {
+            awardingList.allAwarding.addAll(listData)
             currentView?.setList()
-
+        }
     }
 
     override fun attachView(view: V) {
@@ -66,7 +60,7 @@ class MainPresenter<V : IMainActivity>(
     override fun detachView(view: V) {
         if (view == currentView)
             currentView = null
-        dsRX.clear()
+        dsRX?.dispose()
     }
 
 }

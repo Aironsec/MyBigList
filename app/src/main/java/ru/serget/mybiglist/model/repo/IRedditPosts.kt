@@ -5,5 +5,5 @@ import io.reactivex.rxjava3.core.Single
 import ru.serget.mybiglist.model.entity.AllAwarding
 
 interface IRedditPosts {
-    fun getAllAwarding(): Single<List<AllAwarding>>
+    fun getBigList(): Single<List<AllAwarding>>
 }
