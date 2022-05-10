@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         MainPresenter<IMainActivity>(RedditPostsImpl(ApiHolder.api), AndroidSchedulers.mainThread())
     }
     private val adapterRV by lazy {
-        AwardingRVAdapter(presenter.awardingList)
+        AwardingRVAdapter(presenter.awardingList, ImageLoaderImpl())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

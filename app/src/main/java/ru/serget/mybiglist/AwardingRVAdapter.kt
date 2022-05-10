@@ -2,12 +2,17 @@ package ru.serget.mybiglist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ru.serget.mybiglist.databinding.ItemAwardingBinding
+import ru.serget.mybiglist.model.IImageLoader
 import ru.serget.mybiglist.presenter.list.IPresenterList
 import ru.serget.mybiglist.view.list.IAwardingView
 
-class AwardingRVAdapter(private val presenter: IPresenterList<IAwardingView>):
+class AwardingRVAdapter(
+    private val presenter: IPresenterList<IAwardingView>,
+    val loadImage: IImageLoader<ImageView>
+):
     RecyclerView.Adapter<AwardingRVAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemAwardingBinding, override var pos: Int):
@@ -22,7 +27,7 @@ class AwardingRVAdapter(private val presenter: IPresenterList<IAwardingView>):
         }
 
         override fun loadIcon(url: String) {
-
+            loadImage.loadLeftImage(url, binding.iconAwarding)
         }
 
     }
