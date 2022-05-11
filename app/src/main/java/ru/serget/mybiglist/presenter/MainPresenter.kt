@@ -7,11 +7,12 @@ import ru.serget.mybiglist.model.repo.IRedditPosts
 import ru.serget.mybiglist.presenter.list.IPresenterList
 import ru.serget.mybiglist.view.IMainActivity
 import ru.serget.mybiglist.view.list.IAwardingView
+import javax.inject.Inject
 
-class MainPresenter<V : IMainActivity>(
-    private val repo: IRedditPosts,
-    private val uiScheduler: Scheduler,
-) : IMainPresenter<V> {
+class MainPresenter<V : IMainActivity> () : IMainPresenter<V> {
+
+    @Inject lateinit var repo: IRedditPosts
+    @Inject lateinit var uiScheduler: Scheduler
 
     inner class AwardingListPresenter : IPresenterList<IAwardingView> {
 

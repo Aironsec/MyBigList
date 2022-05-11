@@ -2,24 +2,28 @@ package ru.serget.mybiglist
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.serget.mybiglist.databinding.ActivityMainBinding
-import ru.serget.mybiglist.model.api.ApiHolder
-import ru.serget.mybiglist.model.repo.RedditPostsImpl
+import ru.serget.mybiglist.model.IImageLoader
 import ru.serget.mybiglist.presenter.MainPresenter
 import ru.serget.mybiglist.view.IMainActivity
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), IMainActivity {
+
+    @Inject lateinit var imageLoader: IImageLoader<ImageView>
 
     private lateinit var binding: ActivityMainBinding
 
     private val presenter by lazy {
-        MainPresenter<IMainActivity>(RedditPostsImpl(ApiHolder.api), AndroidSchedulers.mainThread())
+        MainPresenter<IMainActivity>().apply {
+            App.instance.appComponent.inject(this)
+        }
     }
     private val adapterRV by lazy {
-        AwardingRVAdapter(presenter.awardingList, ImageLoaderImpl())
+        AwardingRVAdapter(presenter.awardingList, imageLoader)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +43,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
     }
 
     override fun init() {
+        App.instance.appComponent.inject(this)
         binding.listItemAwarding.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = adapterRV

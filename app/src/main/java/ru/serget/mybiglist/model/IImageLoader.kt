@@ -1,5 +1,6 @@
 package ru.serget.mybiglist.model
 
-interface IImageLoader<in T> {
+
+interface IImageLoader<T> {
     fun loadLeftImage(url:String, container: T)
 }

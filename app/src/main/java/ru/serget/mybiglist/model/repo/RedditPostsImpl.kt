@@ -32,6 +32,8 @@ class RedditPostsImpl(private val api: IDataSource) : IRedditPosts {
         endElement += countElementPage
         if (endElement > allData.size)
             endElement = allData.size
+        if (startElement > endElement)
+            startElement = endElement
 
         return allData.subList(startElement, endElement)
     }
